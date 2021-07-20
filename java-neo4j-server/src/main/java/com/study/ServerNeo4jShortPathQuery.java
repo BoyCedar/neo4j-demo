@@ -1,0 +1,27 @@
+package com.study;
+
+import org.neo4j.driver.*;
+
+import static org.neo4j.driver.Values.parameters;
+
+/**
+ * 最短路径的查询
+ *
+ * @author qixs
+ * @since 2021/07/20
+ */
+public class ServerNeo4jShortPathQuery {
+
+    public static void main(String[] args) {
+        Driver driver = GraphDatabase.driver("neo4j://81.70.202.213:7687",AuthTokens.basic("neo4j","123456"));
+        Session session = driver.session();
+        String cql = "match p = shortestpath((n1:Person{name:$startName}) - [*] - (n2:Person{name:$endName})) return p";
+        Result result = session.run(cql,parameters("startName","王启年","endName","九品射手燕小乙"));
+        while (result.hasNext()) {
+            Record record = result.next();
+            System.out.println(record.get("name").asString() + " " + record.get("money").asDouble());
+        }
+        session.close();
+        driver.close();
+    }
+}
