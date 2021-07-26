@@ -9,7 +9,6 @@ import org.neo4j.graphdb.factory.GraphDatabaseFactory;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * neo4j 的查询方法
